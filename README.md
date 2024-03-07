@@ -1,6 +1,6 @@
 # PAF Service
 
-> "Practically All Features service - Because Who Needs Reality When You've Got Everything Else?
+> Practically All Features service - Because Who Needs Reality When You've Got Everything Else?
 
 PAF (Place, Address, and Form) is a web service designed to provide comprehensive data about countries, languages, locales, and currency rates. It simplifies accessing various geographical and financial information through a RESTful API interface.
 
@@ -25,7 +25,9 @@ Additionally, PAF includes a scheduled task that updates currency rates daily, f
 
 1. **Clone the Repository:**
 
-
+```
+git clone git@github.com:themondays/paf.git
+```
 
 2. **Configure Environment Variables:**
 
@@ -38,7 +40,7 @@ DATABASE_URL=postgres://user:password@localhost/paf_db
 
 3. **Setup Database:**
 
-Ensure your PostgreSQL database is running and accessible through the connection string specified in your `.env` file.
+Ensure your PostgreSQL database is running and accessible through the connection string specified in your `.env` file or service env.
 
 4. **Run Database Migrations:**
 
@@ -88,4 +90,6 @@ Contributions are welcome! Please create a pull request or issue to contribute t
 ## License
 
 This project is distributed under the MIT License. See the LICENSE file for more details.
+
+__Crafted with passion beneath the ever-watchful eyes of the Melbourne skyline – where creativity meets coffee.__
 
