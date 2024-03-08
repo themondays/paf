@@ -2,7 +2,7 @@
 
 > Practically All Features service - Because Who Needs Reality When You've Got Everything Else?
 
-PAF (Place, Address, and Form) is a web service designed to provide comprehensive data about countries, languages, locales, and currency rates. It simplifies accessing various geographical and financial information through a RESTful API interface.
+PAF (Postal Address File) is a web service designed to provide comprehensive data about countries, languages, locales, and currency rates. It simplifies accessing various geographical and financial information through a RESTful API interface.
 
 ## Features
 

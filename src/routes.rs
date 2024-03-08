@@ -33,4 +33,3 @@ pub fn init_routes(cfg: &mut web::ServiceConfig) {
                 .route("/{currency}", web::get().to(rate_handler::get_rate))
         );
 }
-
