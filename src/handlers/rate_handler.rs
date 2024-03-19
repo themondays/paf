@@ -13,13 +13,12 @@ pub async fn fetch_and_store_rates(pool: PgPool) -> Result<(), Box<dyn Error>> {
     let envelope: Envelope = from_str(&xml).unwrap();
     for cube_time in envelope.cube.cubes.iter() {
         for cube in cube_time.cubes.iter() {
-            sqlx::query!(
+            let query = sqlx::query(
                 "INSERT INTO paf_rates (currency, rate) VALUES ($1, $2) ON CONFLICT (currency) DO UPDATE SET rate = EXCLUDED.rate",
-                cube.currency,
-                cube.rate,
-            )
-            .execute(&pool)
-            .await?;
+              )
+              .bind(&cube.currency)
+              .bind(&cube.rate);
+            query.execute(&pool).await?;
         }
     }
     Ok(())
@@ -35,9 +34,9 @@ pub async fn get_rate(pool: web::Data<PgPool>, currency: web::Path<String>) -> i
                 Err(_) => HttpResponse::InternalServerError().finish(),
             }
     } else {
-        let target_rate_res = sqlx::query!("SELECT rate FROM paf_rates WHERE currency = $1", target_currency)
-            .fetch_optional(pool.get_ref())
-            .await;
+       let target_rate_res = sqlx::query_as::<_, Rate>("SELECT rate FROM paf_rates WHERE currency = $1")
+            .bind(&target_currency)
+            .fetch_optional(pool.get_ref()).await;
 
         match target_rate_res {
             Ok(Some(row)) => {
