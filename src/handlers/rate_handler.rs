@@ -34,7 +34,7 @@ pub async fn get_rate(pool: web::Data<PgPool>, currency: web::Path<String>) -> i
                 Err(_) => HttpResponse::InternalServerError().finish(),
             }
     } else {
-       let target_rate_res = sqlx::query_as::<_, Rate>("SELECT rate FROM paf_rates WHERE currency = $1")
+       let target_rate_res = sqlx::query_as::<_, Rate>("SELECT currency, rate FROM paf_rates WHERE currency = $1")
             .bind(&target_currency)
             .fetch_optional(pool.get_ref()).await;
 
@@ -62,7 +62,8 @@ pub async fn get_rate(pool: web::Data<PgPool>, currency: web::Path<String>) -> i
                         Err(e) => HttpResponse::InternalServerError().json(json!({"error": format!("Failed to fetch rates: {}", e)}))
                     }
             },
-            _ => HttpResponse::InternalServerError().finish(),
+            Ok(None) => HttpResponse::NotFound().finish(),
+            Err(e) => HttpResponse::InternalServerError().json(json!({"error": format!("Failed to fetch rate: {}", e)}))
         }
     }
 }
